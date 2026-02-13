@@ -21,8 +21,8 @@ function Dashboard() {
     try {
       const url =
         filterLevel === "All"
-          ? "http://localhost:5000/risks"
-          : `http://localhost:5000/risks?level=${filterLevel}`;
+          ? `${import.meta.env.VITE_API_BACKEND_URL}/risks`
+          : `${import.meta.env.VITE_API_BACKEND_URL}/risks?level=${filterLevel}`;
 
       const response = await axios.get(url);
       setRisks(response.data || []);
@@ -36,7 +36,7 @@ function Dashboard() {
 
   const fetchStats = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:5000/stats");
+      const response = await axios.get(`${import.meta.env.VITE_API_BACKEND_URL}/stats`);
       setStats(response.data);
     } catch (err) {
       console.error("Failed to fetch statistics:", err);
@@ -51,7 +51,7 @@ function Dashboard() {
   const handleDeleteRisk = async (id) => {
     if (window.confirm("Are you sure you want to delete this risk?")) {
       try {
-        await axios.delete(`http://localhost:5000/risks/${id}`);
+        await axios.delete(`${import.meta.env.VITE_API_BACKEND_URL}/risks/${id}`);
         setRisks(risks.filter((risk) => risk.id !== id));
         fetchStats();
       } catch (err) {
