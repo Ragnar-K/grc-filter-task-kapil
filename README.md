@@ -15,10 +15,13 @@ This application implements a complete GRC risk assessment workflow:
 This tool aligns with **NIST SP 800-30 Risk Assessment Framework**, a standard approach used by government and enterprise organizations to systematically identify, analyze, and prioritize information security risks.
 
 ### Screenshots
-**Dashboard**
-![Dashboard](images\dashboard.png)
+**Dashboard**  
+
+![Dashboard](images/dashboard.png)
+
 **Assess Risk**
-![Assess Risk](images\input_form.png)
+
+![Assess Risk](images/input_form.png)
 
 
 ## 🚀 Quick Start
