@@ -1,2 +1,2 @@
-backend/node_modules/
-backend/risks.db
+node_modules/
+risks.db
