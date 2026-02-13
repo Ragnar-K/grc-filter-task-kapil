@@ -7,12 +7,23 @@ const app = express();
 const PORT = 5000;
 
 // Middleware
-app.use(cors({
-  origin: ['https://grc-filter-task-kapil-frontend.onrender.com/'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type']
-}));
-app.use(express.json());
+app.use(express.json()); // use this instead of bodyParser.json()
+
+const corsOptions = {
+  origin: [
+    'https://grc-filter-task-kapil-frontend.onrender.com'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
+// Apply CORS
+app.use(cors(corsOptions));
+
+// Handle preflight requests explicitly
+app.options('*', cors(corsOptions));
+
 
 // Initialize SQLite database
 const dbPath = path.join(__dirname, 'risks.db');
