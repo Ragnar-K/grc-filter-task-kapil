@@ -62,7 +62,9 @@ function seedDefaultRisks() {
       { asset: 'Backup Server', threat: 'Backup Failure', likelihood: 2, impact: 4 },
       { asset: 'Email System', threat: 'Phishing Attack', likelihood: 5, impact: 3 },
       { asset: 'HR System', threat: 'Insider Data Leak', likelihood: 2, impact: 5 },
-      { asset: 'API Gateway', threat: 'DDoS Attack', likelihood: 3, impact: 4 }
+      { asset: 'API Gateway', threat: 'DDoS Attack', likelihood: 3, impact: 4 },
+      { asset: 'Public Marketing Website', threat: 'Minor Content Defacement', likelihood: 1, impact: 3 },
+      { asset: 'Archived Logs Storage', threat: 'Accidental Deletion', likelihood: 1, impact: 4 }
     ];
 
     const insertSQL = `
