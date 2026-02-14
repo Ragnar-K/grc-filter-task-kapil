@@ -36,6 +36,62 @@ const db = new sqlite3.Database(dbPath, (err) => {
   }
 });
 
+// Seed default risks (runs only if table is empty)
+function seedDefaultRisks() {
+  const checkSQL = `SELECT COUNT(*) as count FROM risks`;
+
+  db.get(checkSQL, (err, row) => {
+    if (err) {
+      console.error('Error checking existing risks:', err);
+      return;
+    }
+
+    // Prevent duplicate seeding
+    if (row.count > 0) {
+      console.log('Default risks already exist. Skipping seed.');
+      return;
+    }
+
+    console.log('Seeding default risks...');
+
+    const defaultRisks = [
+      { asset: 'Customer Database', threat: 'Unauthorized Access', likelihood: 5, impact: 5 },
+      { asset: 'Web Application', threat: 'SQL Injection', likelihood: 4, impact: 5 },
+      { asset: 'Cloud Storage', threat: 'Misconfiguration', likelihood: 3, impact: 4 },
+      { asset: 'Internal Network', threat: 'Ransomware', likelihood: 4, impact: 4 },
+      { asset: 'Backup Server', threat: 'Backup Failure', likelihood: 2, impact: 4 },
+      { asset: 'Email System', threat: 'Phishing Attack', likelihood: 5, impact: 3 },
+      { asset: 'HR System', threat: 'Insider Data Leak', likelihood: 2, impact: 5 },
+      { asset: 'API Gateway', threat: 'DDoS Attack', likelihood: 3, impact: 4 }
+    ];
+
+    const insertSQL = `
+      INSERT INTO risks (asset, threat, likelihood, impact, score, level)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    const stmt = db.prepare(insertSQL);
+
+    defaultRisks.forEach(risk => {
+      const score = risk.likelihood * risk.impact;
+      const level = calculateRiskLevel(score);
+
+      stmt.run(
+        risk.asset,
+        risk.threat,
+        risk.likelihood,
+        risk.impact,
+        score,
+        level
+      );
+    });
+
+    stmt.finalize();
+    console.log('Default risks inserted successfully.');
+  });
+}
+
+
 // Initialize database schema
 function initializeDatabase() {
   const createTableSQL = `
@@ -56,6 +112,7 @@ function initializeDatabase() {
       console.error('Error creating table:', err);
     } else {
       console.log('Risks table initialized');
+      seedDefaultRisks();
     }
   });
 }
