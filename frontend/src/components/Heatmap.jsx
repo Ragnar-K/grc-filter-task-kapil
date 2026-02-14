@@ -37,7 +37,7 @@ function Heatmap({ risks }) {
   return (
     <div className="space-y-6">
       {/* Heatmap Grid */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto overflow-y-visible">
         <div className="inline-block">
           {/* Column Headers (Impact) */}
           <div className="flex gap-0">
@@ -70,7 +70,7 @@ function Heatmap({ risks }) {
                     key={key}
                     onMouseEnter={() => setHoveredCell(key)}
                     onMouseLeave={() => setHoveredCell(null)}
-                    className="w-24 h-24 border border-gray-300 flex flex-col items-center justify-center cursor-pointer transition hover:shadow-lg hover:scale-105 relative"
+                    className="w-24 h-24 border border-gray-300 flex flex-col items-center justify-center cursor-pointer transition hover:shadow-lg hover:scale-105 relative overflow-visible"
                     style={{
                       backgroundColor: cellData
                         ? getLevelColor(score)
@@ -88,7 +88,7 @@ function Heatmap({ risks }) {
 
                     {/* Tooltip */}
                     {isHovered && cellData && cellData.count > 0 && (
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900 text-white px-3 py-2 rounded-lg text-xs z-50 whitespace-nowrap border border-gray-600 shadow-lg">
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900 text-white px-3 py-2 rounded-lg text-xs z-[9999] whitespace-nowrap border border-gray-600 shadow-lg">
                         <div className="font-semibold mb-1">
                           {cellData.count} risk(s) here:
                         </div>
